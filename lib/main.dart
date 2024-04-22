@@ -78,8 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
     for (var line in lines) {
       List<String> tokens = line.split(' ');
       for (var i = 0; i < tokens.length; i++) {
-        if (tokens[i] == 'let' &&
-            i + 1 < tokens.length) {
+        if (tokens[i] == 'let' && i + 1 < tokens.length) {
           String token = tokens[i + 1];
           // Verifica se há caracteres especiais na variável
           RegExp specialChars = RegExp(r'[ç().{}!@#%^&*,?":|<>]');
@@ -95,15 +94,20 @@ class _MyHomePageState extends State<MyHomePage> {
             allowedTokens.add(createdToken);
             tokens[i + 1] = createdToken;
           }
-        } else if ((tokens[i] == '===' || tokens[i] == '=') &&
-            i + 1 < tokens.length ) {
+        } else if ((tokens[i] == '===' ||
+                tokens[i] == '=' ||
+                tokens[i] == '>' ||
+                tokens[i] == '<' ||
+                tokens[i] == '<=' ||
+                tokens[i] == '>=') &&
+            i + 1 < tokens.length) {
           String token = tokens[i + 1];
           if (token.startsWith('"') || token.startsWith("'")) {
             // Verifica se o token começa com um número
             if (RegExp(r'^[0-9]').hasMatch(token)) {
               return 'A variável não pode começar com um número.';
             }
-          } else if (RegExp(r'^[0-9]').hasMatch(token)){
+          } else if (RegExp(r'^[0-9]').hasMatch(token)) {
             // Verifica se há caracteres especiais na variável
             RegExp specialChars = RegExp(r'[ç(){}!@#%^&*,?":|<>]');
             if (specialChars.hasMatch(token)) {
